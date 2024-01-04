@@ -1,0 +1,38 @@
+#ifndef EDGE_H
+#define EDGE_H
+
+#include <QGraphicsItem>
+
+class Node;
+
+class Edge : public QGraphicsItem
+{
+public:
+    Edge(Node *sourceNode, Node *destNode, QString inputListStr);
+    // 起点 终点 正向的边注释 反向边注释
+    ~Edge();
+
+    Node *sourceNode() const;
+    Node *destNode() const;
+
+    QString getInputList() const;
+    void setInputList(QString newInputList);
+
+    void adjust();
+
+    enum { Type = UserType + 2 };
+    int type() const override { return Type; }
+
+protected:
+    QRectF boundingRect() const override;
+    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
+
+private:
+    Node *source, *dest;
+    QString inputList;
+    QPointF sourcePoint;
+    QPointF destPoint;
+    qreal arrowSize = 10; // 箭头大小
+};
+
+#endif // EDGE_H
